@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS votersdb_users;
