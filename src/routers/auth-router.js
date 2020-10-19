@@ -2,8 +2,6 @@ const express = require("express");
 const AuthService = require("../services/auth-service");
 const UsersService = require("../services/users-service");
 
-// const JWTAuth = require("../middleware/jwt-auth");
-
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
@@ -32,8 +30,6 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
             error: "Incorrect user_name or password",
           });
 
-        // The following code makes a JWT from the user information,
-        // which is later used to verify if tokens sent from the client are valid
         const sub = dbUser.user_name;
         const payload = { user_id: dbUser.id };
         res.send({
@@ -44,13 +40,9 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
     .catch(next);
 });
 
-// This is the route that the client sends to the server every time the app
-// is started.
 authRouter.get("/users/:token", (req, res, next) => {
   const token = req.params.token;
   const username = AuthService.verifyJwt(token).sub;
-
-  // JWTAuth.requireAuth(req, res, next);
 
   AuthService.getUserWithUserName(req.app.get("db"), username)
     .then((user) => {
