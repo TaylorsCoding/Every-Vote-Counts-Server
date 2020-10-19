@@ -3,6 +3,7 @@ CREATE TABLE votersdb_users (
     user_name TEXT NOT NULL,
     full_name TEXT NOT NULL,
     password TEXT NOT NULL,
+    addresses TEXT[],
     date_created TIMESTAMP DEFAULT now() NOT NULL,
     date_modified TIMESTAMP
 );
